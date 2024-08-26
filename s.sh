@@ -2,7 +2,7 @@
 
 show_limited_ports() {
     echo "当前接口 $INTERFACE 已限速的端口："
-    sudo tc filter show dev $INTERFACE | grep -E "match ip (sport|dport)" | awk '{print "端口: " $NF}'
+    sudo tc filter show dev $INTERFACE | grep -Eo "sport .*|dport .*" | awk '{print "端口: " $2}'
 }
 
 add_limit() {
@@ -92,7 +92,7 @@ main_menu() {
             3) delete_limit ;;
             4) reset_all_limits ;;
             5) exit 0 ;;
-            *) echo "无效选项，请重试" ;;
+            *) echo "无效选项，请重试。" ;;
         esac
     done
 }
