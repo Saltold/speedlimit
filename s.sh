@@ -2,7 +2,7 @@
 
 show_limited_ports() {
     echo "当前接口 $INTERFACE 已限速的端口："
-    sudo tc filter show dev $INTERFACE | grep -Eo "sport .*|dport .*" | awk '{print "端口: " $2}'
+    sudo tc filter show dev $INTERFACE | grep -E "match ip (sport|dport)" | awk '{print "端口: " $NF}'
 }
 
 add_limit() {
@@ -19,7 +19,7 @@ add_limit() {
         delete_limit $PORT
     fi
 
-    read -p "请输入上传速度限制 (例如, 10, 默认单位是 mbit/s): " UPLOAD_SPEED
+    read -p "请输入上传速度限制 (例如, 1, 默认单位是 mbit/s): " UPLOAD_SPEED
     if [[ ! "$UPLOAD_SPEED" =~ [a-zA-Z]+$ ]]; then
         UPLOAD_SPEED="${UPLOAD_SPEED}mbit"
     fi
@@ -79,8 +79,8 @@ reset_all_limits() {
 main_menu() {
     while true; do
         echo "网络接口: $INTERFACE"
-        echo "1. 显示当前限速规则"
-        echo "2. 添加新的限速规则"
+        echo "1. 显示当前限速端口[坏的]"
+        echo "2. 添加新的端口限速"
         echo "3. 删除端口限速规则"
         echo "4. 重置所有限速规则"
         echo "5. 退出脚本"
