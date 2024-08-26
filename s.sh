@@ -81,7 +81,7 @@ main_menu() {
         echo "网络接口: $INTERFACE"
         echo "1. 端口限速脚本V1.1"
         echo "2. 添加新的端口限速"
-        echo "3. ~~~~~~~~~~~~~~"
+        echo "3. ~~~~~~~~~~~~~~~"
         echo "4. 重置所有限速规则"
         echo "5. 退出脚本"
         read -p "请选择一个选项: " option
